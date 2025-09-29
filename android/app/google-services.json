@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497208417636",
+    "project_id": "trendzo-3984c",
+    "storage_bucket": "trendzo-3984c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497208417636:android:2213ed086dece667236e71",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce_app_using_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgkdMq7Zw_nmfCuRHpPc622twe9lSm7V8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
