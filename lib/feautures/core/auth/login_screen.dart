@@ -2,12 +2,13 @@ import 'package:ecommerce_app_using_flutter/config/app_assets.dart';
 import 'package:ecommerce_app_using_flutter/config/app_colours.dart';
 import 'package:ecommerce_app_using_flutter/config/app_layout.dart';
 import 'package:ecommerce_app_using_flutter/config/app_route.dart';
+import 'package:ecommerce_app_using_flutter/config/app_sharedpref.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_button.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_snackbar.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_textformfield.dart';
-import 'package:ecommerce_app_using_flutter/utils/text_validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,27 +32,24 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (credential.user != null) {
-        Navigator.pushNamed(context, AppRoutes.homeScreen);
-        showCustomSnackbar(context,
+        await AppSharedpref.setBool(AppSharedkeys.userId, true);
+        Get.offAllNamed(AppRoutes.homeScreen);
+        showCustomSnackbar(
             text: "Login Successfull", status: StatusTypes.success);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        showCustomSnackbar(context,
-            text: "No user found for this email", status: StatusTypes.error);
+        showCustomSnackbar(text: "user not found", status: StatusTypes.error);
       } else if (e.code == 'wrong-password') {
-        showCustomSnackbar(context,
-            text: "wrong password", status: StatusTypes.error);
+        showCustomSnackbar(text: "wrong password", status: StatusTypes.error);
       } else {
-        showCustomSnackbar(context,
-            text: "Login Failed", status: StatusTypes.error);
+        showCustomSnackbar(text: "Login Failed", status: StatusTypes.error);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -105,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text("Dont have an account ?"),
                         TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, AppRoutes.register);
+                              Get.toNamed(AppRoutes.register);
                             },
                             child: Text("Register"))
                       ],

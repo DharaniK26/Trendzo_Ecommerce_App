@@ -8,6 +8,7 @@ import 'package:ecommerce_app_using_flutter/utils/custom_textformfield.dart';
 import 'package:ecommerce_app_using_flutter/utils/text_validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -28,28 +29,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
         password: passwordController.text.trim(),
       );
 
-      showCustomSnackbar(context,
-          text: "Registration Successful: ${credential.user?.email}",status: StatusTypes.success);
+      showCustomSnackbar(
+          text: "Registration Successful: ${credential.user?.email}",
+          status: StatusTypes.success);
 
-      Navigator.pushReplacementNamed(context, AppRoutes.homeScreen);
+      Get.offAllNamed(AppRoutes.homeScreen);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        showCustomSnackbar(context, text: "Password provided is too weak.",status: StatusTypes.error);
+        showCustomSnackbar(
+            text: "Password provided is too weak.", status: StatusTypes.error);
       } else if (e.code == 'email-already-in-use') {
-        showCustomSnackbar(context,
-            text: "An account already exists for that email",status: StatusTypes.error);
+        showCustomSnackbar(
+            text: "An account already exists for that email",
+            status: StatusTypes.error);
       } else if (e.code == 'invalid-email') {
-        showCustomSnackbar(context, text: "Invalid email address.",status: StatusTypes.error);
+        showCustomSnackbar(
+            text: "Invalid email address.", status: StatusTypes.error);
       } else {
-        showCustomSnackbar(context,
-            text: "Registration failed. Please try again.",status: StatusTypes.error);
+        showCustomSnackbar(
+            text: "Registration failed. Please try again.",
+            status: StatusTypes.error);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(

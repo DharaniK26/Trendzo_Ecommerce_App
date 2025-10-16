@@ -15,6 +15,7 @@ class ProductController extends GetxController {
     fetchProducts();
     super.onInit();
   }
+
 void fetchProducts() async {
     try {
       isLoading(true);
@@ -32,6 +33,7 @@ void fetchProducts() async {
       isLoading(false);
     }
   }
+  
   List<ProductListModal> get filteredProducts {
     List<ProductListModal> products = [...productList];
 

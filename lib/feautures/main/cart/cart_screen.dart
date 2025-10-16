@@ -22,15 +22,6 @@ class _CartScreenState extends State<CartScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    // Calculate total amount
-    double totalAmount() {
-      double total = 0;
-      for (var item in cartController.cartItems) {
-        total += item.price;
-      }
-      return total;
-    }
-
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
@@ -73,13 +64,17 @@ class _CartScreenState extends State<CartScreen> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.network(
-                                item.image,
-                                fit: BoxFit.cover,
-                                height: height * 0.2,
-                                width: width * 0.35,
+                            Container(
+                              height: height * 0.2,
+                              width: width * 0.30,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.network(
+                                  item.image,
+                                  fit: BoxFit.cover,
+                                  height: height * 0.2,
+                                  width: width * 0.35,
+                                ),
                               ),
                             ),
                             AppLayout.spaceW10,
@@ -108,14 +103,14 @@ class _CartScreenState extends State<CartScreen> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                  "₹${item.price * item.count}",
+                                                  "₹${(item.price * item.count).toStringAsFixed(2)}",
                                                   style:
                                                       AppStyle.bodyTextStyle),
                                               AppLayout.spaceW10,
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 4),
+                                                        horizontal: 1),
                                                 decoration: BoxDecoration(
                                                   color: Colors.grey.shade200,
                                                   borderRadius:
@@ -196,7 +191,7 @@ class _CartScreenState extends State<CartScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Subtotal"),
-                      Text("₹$subtotal"),
+                      Text("₹${subtotal.toStringAsFixed(2)}"),
                     ],
                   ),
                   AppLayout.spaceH10,
@@ -216,13 +211,13 @@ class _CartScreenState extends State<CartScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Total"),
-                      Text("₹$total"),
+                      Text("₹${total.toStringAsFixed(2)}"),
                     ],
                   ),
                   AppLayout.spaceH10,
                   CustomButton(
                     onPressed: () {
-                      showCustomSnackbar(context,
+                      showCustomSnackbar(
                           text: "order Placed", status: StatusTypes.success);
                     },
                     text: "Place Oder",

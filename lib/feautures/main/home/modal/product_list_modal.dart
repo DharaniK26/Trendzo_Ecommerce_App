@@ -16,7 +16,7 @@ class ProductListModal {
     required this.category,
     required this.image,
     required this.rating,
-    this.count=1,
+    this.count = 1,
   });
 
   factory ProductListModal.fromJson(Map<String, dynamic> json) =>
@@ -29,6 +29,17 @@ class ProductListModal {
         image: json["image"] ?? '',
         rating: Rating.fromJson(json["rating"]),
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "price": price,
+        "description": description,
+        "category": category,
+        "image": image,
+        "rating": rating.toJson(),
+        "count": count,
+      };
 }
 
 class Rating {
@@ -44,4 +55,9 @@ class Rating {
         rate: json["rate"]?.toDouble(),
         count: json["count"] ?? 0,
       );
+
+  Map<String, dynamic> toJson() => {
+        "rate": rate,
+        "count": count,
+      };
 }

@@ -4,10 +4,12 @@ import 'package:ecommerce_app_using_flutter/config/app_route.dart';
 import 'package:ecommerce_app_using_flutter/config/app_style.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/cart/controller/cartcontroller.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/home/controller/product_list_controller.dart';
+import 'package:ecommerce_app_using_flutter/feautures/main/home/controller/wishlist_controller.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_button.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final int id;
@@ -24,6 +26,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     double width = MediaQuery.of(context).size.width;
     final productController = Get.find<ProductController>();
     final cartController = Get.find<CartController>();
+    final wishlistController = Get.find<WishlistController>();
     final product = productController.productList.firstWhere(
       (p) => p.id == widget.id,
     );
@@ -92,10 +95,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(
-                      Icons.favorite_outline,
-                      color: AppColors.prime,
-                    ),
+                    IconButton(
+                        onPressed: () {
+                          showCustomSnackbar(
+                              text: "Added to WishList",
+                              status: StatusTypes.success);
+                          wishlistController.addToWishList(product);
+                        },
+                        icon: Icon(
+                          Icons.favorite_outline_outlined,
+                          color: AppColors.prime,
+                        )),
                     AppLayout.spaceW40,
                     Text(
                       "Wishlist",
@@ -239,7 +249,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       text: "Add to cart",
                       onPressed: () {
                         cartController.addToCart(product);
-                        showCustomSnackbar(context,
+                        showCustomSnackbar(
                             text:
                                 "The Product is Added in to the cart SuccessFully",
                             status: StatusTypes.success);
@@ -256,7 +266,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       height: height * 0.06,
                       text: "Buy Now",
                       onPressed: () {
-                        showCustomSnackbar(context,
+                        showCustomSnackbar(
                             text: "Happy Shopping",
                             status: StatusTypes.success);
                       },

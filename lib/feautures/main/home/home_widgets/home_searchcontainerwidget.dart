@@ -2,9 +2,12 @@ import 'package:ecommerce_app_using_flutter/config/app_colours.dart';
 import 'package:ecommerce_app_using_flutter/config/app_constants.dart';
 import 'package:ecommerce_app_using_flutter/config/app_layout.dart';
 import 'package:ecommerce_app_using_flutter/config/app_route.dart';
+import 'package:ecommerce_app_using_flutter/config/app_sharedpref.dart';
 import 'package:ecommerce_app_using_flutter/config/app_style.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeSearchBarWidget extends StatelessWidget {
   const HomeSearchBarWidget({
@@ -42,10 +45,40 @@ class HomeSearchBarWidget extends StatelessWidget {
                   style:
                       AppStyle.titleTextStyle.copyWith(color: AppColors.white),
                 ),
-                Icon(
-                  Icons.shopping_cart,
-                  color: AppColors.white,
-                ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.wishListScreen);
+                      },
+                      icon: Icon(
+                        Icons.favorite_outline,
+                        color: AppColors.white,
+                      ),
+                    ),
+                    // AppLayout.spaceW8,
+                    IconButton(
+                        onPressed: () {
+                          Get.defaultDialog(
+                            title: "Logout",
+                            middleText: "Are you sure you want to logout?",
+                            textCancel: "Cancel",
+                            textConfirm: "Logout",
+                            confirmTextColor: Colors.white,
+                            onConfirm: () async {
+                              await AppSharedpref.clearshareddata();
+                              Get.back();
+                              Get.offAllNamed(AppRoutes.login);
+                            },
+                          );
+                        },
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: AppColors.white,
+                          size: 20,
+                        ))
+                  ],
+                )
               ],
             ),
             AppLayout.spaceH20,
@@ -76,19 +109,21 @@ class HomeSearchBarWidget extends StatelessWidget {
             //     ],
             //   ),
             // ),
-            CustomButton.icon(
-                text: "Search",
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.searchScreen);
-                },
-                width: width,
-                textColor: AppColors.prime,
-                bgColor: AppColors.white,
-                rowAlignment: MainAxisAlignment.start,
-                icon: Icon(
-                  Icons.search,
-                  color: AppColors.prime,
-                ))
+            Expanded(
+              child: CustomButton.icon(
+                  text: "Search",
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.searchScreen);
+                  },
+                  width: width,
+                  textColor: AppColors.prime,
+                  bgColor: AppColors.white,
+                  rowAlignment: MainAxisAlignment.start,
+                  icon: Icon(
+                    Icons.search,
+                    color: AppColors.prime,
+                  )),
+            )
           ],
         ),
       ),

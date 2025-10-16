@@ -6,7 +6,6 @@ import 'package:ecommerce_app_using_flutter/config/app_style.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/home/controller/product_list_controller.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/home/home_widgets/filterwidget.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/home/home_widgets/home_searchcontainerwidget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     if (index == 1) {
-      Navigator.pushNamed(context, AppRoutes.cartScreen);
+      Get.toNamed(AppRoutes.cartScreen);
     }
   }
 
@@ -177,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   return GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.productDetails,
+                        Get.toNamed(AppRoutes.productDetails,
                             arguments: product.id);
                       },
                       child: Card(
@@ -194,9 +193,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(12)),
-                                child: Image.network(
-                                  product.image,
-                                  fit: BoxFit.cover,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.network(
+                                    product.image,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

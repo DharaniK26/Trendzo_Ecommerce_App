@@ -25,7 +25,7 @@ class CartController extends GetxController {
 
   // Decrease quantity
   void decreaseQuantity(ProductListModal product) {
-    if (product.count > 1) {
+    if (product.count >= 1) {
       product.count--;
       cartItems.refresh(); 
     } else {

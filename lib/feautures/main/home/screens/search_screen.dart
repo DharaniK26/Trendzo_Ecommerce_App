@@ -3,7 +3,6 @@ import 'package:ecommerce_app_using_flutter/config/app_layout.dart';
 import 'package:ecommerce_app_using_flutter/config/app_route.dart';
 import 'package:ecommerce_app_using_flutter/config/app_style.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/home/controller/product_list_controller.dart';
-import 'package:ecommerce_app_using_flutter/utils/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -21,10 +20,18 @@ class _SearchScreenState extends State<SearchScreen> {
   // local search query
   final RxString searchQuery = ''.obs;
 
+  // TextField controller to get the current input value
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
@@ -41,15 +48,23 @@ class _SearchScreenState extends State<SearchScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: TextField(
-                decoration: const InputDecoration(
-                  hintText: "Search here",
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.prime)),
-                  prefixIcon: Icon(Icons.search),
-                ),
-                onChanged: (value) {
-                  searchQuery.value = value;
-                },
+                controller: searchController,
+                decoration: InputDecoration(
+                    hintText: "Search here",
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.prime)),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          if (searchController.text.trim().isEmpty) {
+                            searchQuery.value = '';
+                          } else {
+                            searchQuery.value = searchController.text.trim();
+                          }
+                        },
+                        icon: Icon(Icons.search))),
+                // onChanged: (value) {
+                //   searchQuery.value = value;
+                // },
               ),
             ),
             AppLayout.spaceH10,
@@ -89,7 +104,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
                   return GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.productDetails,
+                        Get.toNamed(AppRoutes.productDetails,
                             arguments: product.id);
                       },
                       child: Card(

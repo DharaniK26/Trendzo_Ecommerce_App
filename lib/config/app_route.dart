@@ -4,39 +4,48 @@ import 'package:ecommerce_app_using_flutter/feautures/main/cart/cart_screen.dart
 import 'package:ecommerce_app_using_flutter/feautures/main/home/screens/home_screen.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/home/screens/product_details_screen.dart';
 import 'package:ecommerce_app_using_flutter/feautures/main/home/screens/search_screen.dart';
+import 'package:ecommerce_app_using_flutter/feautures/main/home/screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppRoutes {
   static const String register = '/';
-  static const String login = 'login_screen';
+  static const String login = '/login_screen';
   static const String homeScreen = '/home_screen';
   static const String productDetails = '/product_details_screen';
   static const String cartScreen = '/cart_screen';
   static const String searchScreen = '/search_screen';
+  static const String wishListScreen = '/wishlist_screen';
 }
 
-Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
-  final args = routeSettings.arguments;
-  switch (routeSettings.name) {
-    case AppRoutes.register:
-      return MaterialPageRoute(builder: (_) => const RegisterScreen());
-    case AppRoutes.login:
-      return MaterialPageRoute(builder: (_) => const LoginScreen());
-    case AppRoutes.homeScreen:
-      return MaterialPageRoute(builder: (_) => const HomeScreen());
-    case AppRoutes.productDetails:
-      final id = args as int;
-      return MaterialPageRoute(
-        builder: (_) => ProductDetailsScreen(id: id),
-      );
-    case AppRoutes.cartScreen:
-      return MaterialPageRoute(builder: (_) => const CartScreen());
-    case AppRoutes.searchScreen:
-      return MaterialPageRoute(builder: (_) => const SearchScreen());
-
-    default:
-      return MaterialPageRoute(builder: (_) => const ErrorRoute());
-  }
+class AppPages {
+  static final List<GetPage> routes = [
+    GetPage(
+      name: AppRoutes.register,
+      page: () => const RegisterScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => const LoginScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.homeScreen,
+      page: () => const HomeScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.productDetails,
+      page: () => ProductDetailsScreen(id: Get.arguments as int),
+    ),
+    GetPage(
+      name: AppRoutes.cartScreen,
+      page: () => const CartScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.searchScreen,
+      page: () => const SearchScreen(),
+    ),
+    GetPage(name: AppRoutes.wishListScreen, page: () => const WishListScreen()),
+  ];
 }
 
 class ErrorRoute extends StatelessWidget {
