@@ -2,7 +2,6 @@ import 'package:ecommerce_app_using_flutter/config/app_assets.dart';
 import 'package:ecommerce_app_using_flutter/config/app_colours.dart';
 import 'package:ecommerce_app_using_flutter/config/app_layout.dart';
 import 'package:ecommerce_app_using_flutter/config/app_route.dart';
-import 'package:ecommerce_app_using_flutter/config/app_sharedpref.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_button.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_snackbar.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_textformfield.dart';
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (credential.user != null) {
-        await AppSharedpref.setBool(AppSharedkeys.userId, true);
+        // await AppSharedpref.setBool(AppSharedkeys.userId, true);
         Get.offAllNamed(AppRoutes.homeScreen);
         showCustomSnackbar(
             text: "Login Successfull", status: StatusTypes.success);

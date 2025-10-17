@@ -10,23 +10,22 @@ import 'package:get/get.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await AppSharedpref.initialize();
-  bool ifLoggedIn = AppSharedpref.getBool(AppSharedkeys.userId);
+  
   Get.put(CartController());
   Get.put(WishlistController());
-  runApp(MyApp(ifLoggedIn: ifLoggedIn));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool ifLoggedIn;
-  const MyApp({super.key, required this.ifLoggedIn});
+  
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
-      initialRoute: ifLoggedIn ? AppRoutes.homeScreen : AppRoutes.login,
+      initialRoute: AppRoutes.login,
       getPages: AppPages.routes,
       unknownRoute: GetPage(
         name: '/notfound',

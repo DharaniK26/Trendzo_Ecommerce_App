@@ -2,12 +2,10 @@ import 'package:ecommerce_app_using_flutter/config/app_colours.dart';
 import 'package:ecommerce_app_using_flutter/config/app_constants.dart';
 import 'package:ecommerce_app_using_flutter/config/app_layout.dart';
 import 'package:ecommerce_app_using_flutter/config/app_route.dart';
-import 'package:ecommerce_app_using_flutter/config/app_sharedpref.dart';
 import 'package:ecommerce_app_using_flutter/config/app_style.dart';
 import 'package:ecommerce_app_using_flutter/utils/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeSearchBarWidget extends StatelessWidget {
   const HomeSearchBarWidget({
@@ -66,7 +64,7 @@ class HomeSearchBarWidget extends StatelessWidget {
                             textConfirm: "Logout",
                             confirmTextColor: Colors.white,
                             onConfirm: () async {
-                              await AppSharedpref.clearshareddata();
+                              // await AppSharedpref.clearshareddata();
                               Get.back();
                               Get.offAllNamed(AppRoutes.login);
                             },
